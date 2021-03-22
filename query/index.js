@@ -15,11 +15,10 @@ app.get('/posts', (req, res)=>{
     res.send(posts)
 })
 
-
-app.post('/events', (req, res)=>{
-    switch (req.body.type) {
+const handleEvent = (type, data) => {
+    switch (type) {
         case 'PostCreated': {
-            const {id, title} = req.body.data
+            const {id, title} = data
             posts[id] = {
                 id,
                 title,
@@ -28,21 +27,46 @@ app.post('/events', (req, res)=>{
         }
             break;
         case 'CommentCreated':{
-            const { commentId, content, postId} = req.body.data;
+            const { commentId, content, status, postId} = data;
 
             const post = posts[postId];
 
-            post.comments.push({id: commentId, content})
+            post.comments.push({id: commentId, content, status})
+        }
+            break;
+        
+        case 'CommentUpdated':{
+            const { commentId, content, status, postId} = data;
+
+
+            const post = posts[postId]
+            const comment = post.comments.find((comment) => comment.id === commentId)
+
+            comment.status = status
+            comment.content = content
         }
             break;
 
     }
+}
+
+app.post('/events', (req, res)=>{
+    
+    handleEvent(req.body.type, req.body.data)
 
     console.log(posts);
 
     res.send({})
 })
 
-app.listen(3003,()=>{
-    console.log('App was listen on port 3003');
+app.listen(3002,async ()=>{
+    console.log('App was listen on port 3002');
+
+    const response = await axios.get('http://localhost:3001/events')
+
+    for(let event of response.data) {
+        console.log(`Handle event ${event.type}`);
+        handleEvent(event.type, event.data)
+    }
+
 })

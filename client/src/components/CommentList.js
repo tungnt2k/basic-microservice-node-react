@@ -7,7 +7,7 @@ function CommentList({comments}) {
       <div className="container">
          <ul>
             {comments && Object.values(comments).map((item)=>(
-                 <li key={item.id}>{item.content}</li>
+                 <li key={item.id}>{ item.status === 'approved'?  item.content : `The comment was ${item.status}`}</li>
              ))}
          </ul>
       </div>
