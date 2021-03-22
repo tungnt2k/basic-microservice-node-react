@@ -19,15 +19,15 @@ app.post('/events', (req, res)=>{
 
     events.push(event)
 
-    axios.post('http://localhost:3002/events', event)
-    axios.post('http://localhost:3003/events', event)
     axios.post('http://localhost:4000/events', event)
-    axios.post('http://localhost:5000/events', event)
+    axios.post('http://localhost:4002/events', event)
+    axios.post('http://localhost:4003/events', event)
+    axios.post('http://localhost:4001/events', event)
 
 
     res.send({status: 'OK'})
 })
 
-app.listen(3001,()=>{
-    console.log('App was listen on port 3001');
+app.listen(4005,()=>{
+    console.log('App was listen on port 4005');
 })

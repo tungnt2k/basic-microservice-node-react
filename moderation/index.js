@@ -17,7 +17,7 @@ app.post('/events', async (req, res)=>{
             const { commentId, content, postId} = data
             const status = content.includes('orange') ? 'reject' : 'approved';
 
-            await axios.post('http://localhost:3001/events', {
+            await axios.post('http://localhost:4005/events', {
                 type: 'CommentModerated',
                 data: {
                     commentId,
@@ -35,6 +35,6 @@ app.post('/events', async (req, res)=>{
     res.send({})
 })
 
-app.listen(3003,()=>{
-    console.log('App was listen on port 3003');
+app.listen(4003,()=>{
+    console.log('App was listen on port 4003');
 })

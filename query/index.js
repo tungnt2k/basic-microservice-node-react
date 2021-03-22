@@ -59,10 +59,10 @@ app.post('/events', (req, res)=>{
     res.send({})
 })
 
-app.listen(3002,async ()=>{
-    console.log('App was listen on port 3002');
+app.listen(4002,async ()=>{
+    console.log('App was listen on port 4002');
 
-    const response = await axios.get('http://localhost:3001/events')
+    const response = await axios.get('http://localhost:4005/events')
 
     for(let event of response.data) {
         console.log(`Handle event ${event.type}`);
