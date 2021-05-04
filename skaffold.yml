@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2beta15
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - "./infra/k8s/*.yaml"
+build:
+  local:
+    push: false
+  artifacts:
+    - image: tungnt2k/client
+      context: client
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: tungnt2k/comments
+      context: comments
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: tungnt2k/event-bus
+      context: event-bus
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: tungnt2k/moderation
+      context: moderation
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: tungnt2k/posts
+      context: posts
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .
+    - image: tungnt2k/query
+      context: query
+      docker: 
+        dockerfile: Dockerfile
+      sync: 
+        manual:
+          - src: '*.js'
+            dest: .

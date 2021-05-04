@@ -16,11 +16,12 @@ spec:
         - name: event-bus
           image: tungnt2k/event-bus
           imagePullPolicy: Never
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: event-bus-clusterip-srv
+  name: event-bus-srv
 spec:
   selector:
     app: event-bus
